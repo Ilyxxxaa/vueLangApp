@@ -1,15 +1,17 @@
 <template>
-  <div class="">
+  <div class="background">
+    <SideMenu />
     <router-view />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { SideMenu } from "@/components";
 
 export default defineComponent({
   name: "App",
-  components: {},
+  components: { SideMenu },
 });
 </script>
 
@@ -17,6 +19,10 @@ export default defineComponent({
 @import "./reset.css";
 #app {
   font-family: "Montserrat", sans-serif;
+  .background {
+    background-image: url("@/assets/content-bg.png");
+    min-height: 100vh;
+  }
   .container {
     max-width: 1240px;
     margin: 0 auto;
