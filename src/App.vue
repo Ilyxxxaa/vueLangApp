@@ -1,6 +1,6 @@
 <template>
-  <div class="background">
-    <SideMenu />
+  <SideMenu />
+  <div class="content">
     <router-view />
   </div>
 </template>
@@ -19,14 +19,20 @@ export default defineComponent({
 @import "./reset.css";
 #app {
   font-family: "Montserrat", sans-serif;
-  .background {
-    background-image: url("@/assets/content-bg.png");
-    min-height: 100vh;
-  }
+  min-height: 100vh;
+  display: flex;
+  position: relative;
+
   .container {
     max-width: 1240px;
     margin: 0 auto;
     padding: 0 20px;
+  }
+  .content {
+    width: 100%;
+    background-image: url("@/assets/content-bg.png");
+    min-height: 200vh;
+    padding-left: 100px;
   }
 }
 </style>
