@@ -6,21 +6,15 @@
         <img v-else src="@/assets/cross-icon.svg" alt="image" />
         <div class="">Меню</div>
       </button>
-      <router-link to="/" class="menu-btn">
-        <img src="@/assets/home-icon.svg" alt="" />
-        <div class="">Главная</div>
-      </router-link>
-      <router-link to="/book" class="menu-btn">
-        <img src="@/assets/book-icon.svg" alt="" />
-        <div class="">Учебник</div>
-      </router-link>
-      <router-link to="/games" class="menu-btn">
-        <img src="@/assets/game-icon.svg" alt="" />
-        <div class="">Игры</div>
-      </router-link>
-      <router-link to="/statistics" class="menu-btn">
-        <img src="@/assets/stats-icon.svg" alt="" />
-        <div class="">Статистика</div>
+      <router-link
+        v-for="route in routesData"
+        :key="route.title"
+        :to="route.linkTo"
+        class="menu-btn"
+        @click="toggleMenu"
+      >
+        <img :src="route.iconSrc" alt="" />
+        <div class="">{{ route.title }}</div>
       </router-link>
       <button class="menu-btn log-out">
         <img src="@/assets/logout-icon.svg" alt="" />
@@ -31,12 +25,14 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { routesData } from "@/data/routesData";
 
 export default defineComponent({
   name: "SideMenu",
   data() {
     return {
       menuIsOpen: false,
+      routesData,
     };
   },
   methods: {
