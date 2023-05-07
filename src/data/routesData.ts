@@ -15,7 +15,7 @@ export const routesData = [
     title: "Игры",
   },
   {
-    linkTo: "/ststistics",
+    linkTo: "/statistics",
     iconSrc: require("@/assets/stats-icon.svg"),
     title: "Статистика",
   },

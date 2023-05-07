@@ -11,7 +11,7 @@
         :key="route.title"
         :to="route.linkTo"
         class="menu-btn"
-        @click="toggleMenu"
+        @click="closeMenu"
       >
         <img :src="route.iconSrc" alt="" />
         <div class="">{{ route.title }}</div>
@@ -38,6 +38,9 @@ export default defineComponent({
   methods: {
     toggleMenu() {
       this.menuIsOpen = !this.menuIsOpen;
+    },
+    closeMenu() {
+      this.menuIsOpen = false;
     },
   },
 });
