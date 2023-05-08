@@ -27,7 +27,7 @@ export const levelsData = [
 
 export const levelsColors = [
   "#e050d9",
-  "#0095ff",
+  "#e88fbe",
   "rgb(158, 255, 195)",
   "#e6e930",
   "#FFAD00",

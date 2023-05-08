@@ -24,6 +24,34 @@
           />
         </button>
       </div>
+      <div class="pagination">
+        <button
+          class="pagination_btn double-left"
+          :disabled="page === 0"
+          @click="goToPage(0)"
+        />
+        <button
+          class="pagination_btn left"
+          :disabled="page === 0"
+          @click="goToPage(page - 1)"
+        />
+        <div
+          class="pagination_text"
+          :style="{ 'background-color': activeColor }"
+        >
+          {{ page + 1 }} / 30
+        </div>
+        <button
+          class="pagination_btn right"
+          @click="goToPage(page + 1)"
+          :disabled="page === 29"
+        />
+        <button
+          class="pagination_btn double-right"
+          :disabled="page === 29"
+          @click="goToPage(29)"
+        />
+      </div>
       <div class="words">
         <h2 class="title">Слова</h2>
         <div v-if="!wordsLoading" class="words_content">
@@ -68,7 +96,7 @@ export default defineComponent({
       words: [],
       activeWord: 0,
       page: 0,
-      wordsLoading: true,
+      wordsLoading: false,
     };
   },
   methods: {
@@ -79,10 +107,13 @@ export default defineComponent({
       this.wordsLoading = true;
       const words = await getWordsRequest(this.activeLevel, this.page);
       this.words = words;
-      // this.wordsLoading = false;
+      this.wordsLoading = false;
     },
     setActiveWord(wordIndex: number) {
       this.activeWord = wordIndex;
+    },
+    goToPage(page: number) {
+      this.page = page;
     },
   },
   created() {
@@ -95,6 +126,12 @@ export default defineComponent({
   },
   watch: {
     activeLevel() {
+      this.page = 0;
+      this.activeWord = 0;
+      this.getWords();
+    },
+    page() {
+      this.activeWord = 0;
       this.getWords();
     },
   },
@@ -106,17 +143,17 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   gap: 30px;
+  margin-top: 20px;
 
   .title {
     color: white;
     font-size: 32px;
     font-weight: 900;
     align-self: center;
-    margin-bottom: 30px;
   }
   .levels {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
     &-btn {
@@ -154,6 +191,7 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     padding-bottom: 10px;
+    gap: 20px;
     height: 100%;
     &_container {
       width: 60%;
@@ -170,6 +208,46 @@ export default defineComponent({
     .selected-word {
       width: 35%;
     }
+  }
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  &_btn {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    background-repeat: no-repeat;
+    background-position: center center;
+    cursor: pointer;
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+
+  &_text {
+    color: #fff;
+    font-weight: 900;
+    font-size: 20px;
+    padding: 5px 20px;
+    border-radius: 10px;
+    margin: 0 10px;
+  }
+  .double-left {
+    background-image: url("@/assets/doubleLeft.svg");
+  }
+  .left {
+    background-image: url("@/assets/left.svg");
+  }
+  .double-right {
+    background-image: url("@/assets/doubleRight.svg");
+  }
+  .right {
+    background-image: url("@/assets/right.svg");
   }
 }
 </style>

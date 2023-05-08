@@ -64,5 +64,8 @@ export default defineComponent({
   &-text {
     font-weight: 900;
   }
+  &-translate {
+    text-align: center;
+  }
 }
 </style>
