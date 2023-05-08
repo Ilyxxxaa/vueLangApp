@@ -144,7 +144,6 @@ export default defineComponent({
   flex-direction: column;
   gap: 30px;
   margin-top: 20px;
-
   .title {
     color: white;
     font-size: 32px;
@@ -190,12 +189,14 @@ export default defineComponent({
   .words {
     display: flex;
     flex-direction: column;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     gap: 20px;
-    height: 100%;
+    /* height: 100%; */
     &_container {
-      width: 60%;
+      width: 70%;
       display: flex;
+      align-self: flex-start;
+      justify-content: center;
       flex-wrap: wrap;
       gap: 20px;
     }
