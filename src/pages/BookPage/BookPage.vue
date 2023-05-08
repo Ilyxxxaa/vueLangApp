@@ -26,7 +26,7 @@
       </div>
       <div class="words">
         <h2 class="title">Слова</h2>
-        <div class="words_content">
+        <div v-if="!wordsLoading" class="words_content">
           <div class="words_container">
             <WordItem
               v-for="(word, i) in words"
@@ -39,8 +39,11 @@
             />
           </div>
           <div class="selected-word">
-            <SelectedWord :word="words[activeWord]" />
+            <SelectedWord v-if="words?.length" :word="words[activeWord]" />
           </div>
+        </div>
+        <div v-else class="">
+          <Loader />
         </div>
       </div>
     </div>
@@ -49,7 +52,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { Header, WordItem, SelectedWord } from "@/components";
+import { Header, WordItem, SelectedWord, Loader } from "@/components";
 import { levelsData } from "@/data/levelsData";
 import { getWordsRequest } from "@/api";
 import { IBookPageData } from "./types";
@@ -57,13 +60,15 @@ import { levelsColors } from "@/data/levelsData";
 
 export default defineComponent({
   name: "BookPage",
-  components: { Header, WordItem, SelectedWord },
+  components: { Header, WordItem, SelectedWord, Loader },
   data(): IBookPageData {
     return {
       levelsData,
       activeLevel: 0,
       words: [],
       activeWord: 0,
+      page: 0,
+      wordsLoading: true,
     };
   },
   methods: {
@@ -71,8 +76,10 @@ export default defineComponent({
       this.activeLevel = level;
     },
     async getWords() {
-      const words = await getWordsRequest(0, 0);
+      this.wordsLoading = true;
+      const words = await getWordsRequest(this.activeLevel, this.page);
       this.words = words;
+      // this.wordsLoading = false;
     },
     setActiveWord(wordIndex: number) {
       this.activeWord = wordIndex;
@@ -84,6 +91,11 @@ export default defineComponent({
   computed: {
     activeColor(): string {
       return levelsColors[this.activeLevel];
+    },
+  },
+  watch: {
+    activeLevel() {
+      this.getWords();
     },
   },
 });
@@ -142,6 +154,7 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     padding-bottom: 10px;
+    height: 100%;
     &_container {
       width: 60%;
       display: flex;

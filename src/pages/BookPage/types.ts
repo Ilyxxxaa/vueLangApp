@@ -3,6 +3,8 @@ export interface IBookPageData {
   activeLevel: number;
   words: IWord[];
   activeWord: number;
+  page: number;
+  wordsLoading: boolean;
 }
 
 export interface ILevel {
