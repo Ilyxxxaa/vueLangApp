@@ -2,7 +2,7 @@ export const routesData = [
   {
     linkTo: "/",
     iconSrc: require("@/assets/home-icon.svg"),
-    title: "Меню",
+    title: "Главная",
   },
   {
     linkTo: "/book",

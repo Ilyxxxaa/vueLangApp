@@ -31,7 +31,6 @@ export default defineComponent({
   .content {
     width: 100%;
     background-image: url("@/assets/content-bg.png");
-
     padding-left: 100px;
   }
 }

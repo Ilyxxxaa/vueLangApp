@@ -2,12 +2,12 @@ export interface IBookPageData {
   levelsData: ILevel[];
   activeLevel: number;
   words: IWord[];
+  activeWord: number;
 }
 
 export interface ILevel {
   title: string;
   level: string;
-  color: string;
 }
 
 export interface IWord {
@@ -20,4 +20,9 @@ export interface IWord {
   image: string;
   word: string;
   wordTranslate: string;
+  transcription: string;
+  textExample: string;
+  textExampleTranslate: string;
+  textMeaning: string;
+  textMeaningTranslate: string;
 }

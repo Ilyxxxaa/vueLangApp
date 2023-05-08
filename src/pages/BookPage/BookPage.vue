@@ -6,7 +6,7 @@
       <div class="levels">
         <button
           v-for="(item, index) in levelsData"
-          :key="item.color"
+          :key="item.level"
           class="levels-btn"
           :style="{
             'background-color':
@@ -19,15 +19,28 @@
           <span
             class="btn-circle"
             :style="{
-              'background-color': index === activeLevel ? item.color : 'white',
+              'background-color': index === activeLevel ? activeColor : 'white',
             }"
           />
         </button>
       </div>
       <div class="words">
         <h2 class="title">Слова</h2>
-        <div class="words_container">
-          <WordItem v-for="word in words" :key="word.id" :item="word" />
+        <div class="words_content">
+          <div class="words_container">
+            <WordItem
+              v-for="(word, i) in words"
+              :key="word.id"
+              :item="word"
+              :index="i"
+              :active-index="activeWord"
+              :active-color="activeColor"
+              :set-active-word="setActiveWord"
+            />
+          </div>
+          <div class="selected-word">
+            <SelectedWord :word="words[activeWord]" />
+          </div>
         </div>
       </div>
     </div>
@@ -36,19 +49,21 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { Header, WordItem } from "@/components";
+import { Header, WordItem, SelectedWord } from "@/components";
 import { levelsData } from "@/data/levelsData";
 import { getWordsRequest } from "@/api";
 import { IBookPageData } from "./types";
+import { levelsColors } from "@/data/levelsData";
 
 export default defineComponent({
   name: "BookPage",
-  components: { Header, WordItem },
+  components: { Header, WordItem, SelectedWord },
   data(): IBookPageData {
     return {
       levelsData,
       activeLevel: 0,
       words: [],
+      activeWord: 0,
     };
   },
   methods: {
@@ -56,17 +71,25 @@ export default defineComponent({
       this.activeLevel = level;
     },
     async getWords() {
-      const words = await getWordsRequest(1, 1);
+      const words = await getWordsRequest(0, 0);
       this.words = words;
+    },
+    setActiveWord(wordIndex: number) {
+      this.activeWord = wordIndex;
     },
   },
   created() {
     this.getWords();
   },
+  computed: {
+    activeColor(): string {
+      return levelsColors[this.activeLevel];
+    },
+  },
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .book_content {
   display: flex;
   flex-direction: column;
@@ -118,6 +141,22 @@ export default defineComponent({
   .words {
     display: flex;
     flex-direction: column;
+    padding-bottom: 10px;
+    &_container {
+      width: 60%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+  }
+
+  .words_content {
+    display: flex;
+    justify-content: space-between;
+
+    .selected-word {
+      width: 35%;
+    }
   }
 }
 </style>

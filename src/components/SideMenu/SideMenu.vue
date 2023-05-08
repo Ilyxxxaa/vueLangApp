@@ -50,6 +50,7 @@ export default defineComponent({
 .menu-wrapper {
   position: absolute;
   height: 100%;
+  z-index: 100;
 }
 .menu {
   top: 0;
