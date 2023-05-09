@@ -42,7 +42,7 @@ export default defineComponent({
       return `${BASE_URL}/${this.word.image}`;
     },
     playAudio() {
-      this.audio.volume = 0.05;
+      this.audio.volume = 0.1;
       this.audio.play();
     },
     createNewAudio() {

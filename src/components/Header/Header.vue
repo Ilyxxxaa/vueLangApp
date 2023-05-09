@@ -28,12 +28,13 @@ export default defineComponent({
 }
 .logo {
   text-align: center;
-  font-weight: 700;
+  font-weight: 900;
   font-size: 33px;
   color: white;
 }
 .logo_subtitle {
   font-size: 12px;
+  font-weight: 500;
 }
 .auth_buttons {
   display: flex;
